@@ -341,8 +341,19 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
+.action-bar[data-download-ready="true"] {
+  position: fixed;
+  inset-inline: max(12px, calc((100vw - var(--container) - 32px) / 2));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 50;
+  justify-content: center;
+  margin: 0;
+  box-shadow: var(--shadow-lg);
+}
+body.has-floating-actions { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
 
 .dropzone-card { padding: clamp(12px, 2.6vw, 18px); }
+.btn-compress { width: 100%; margin-top: 12px; }
 
 /* Icon and wording on the first row, the Choose Image button full width beneath
    them. Works in a narrow column and full width alike, so one layout serves
@@ -752,36 +763,6 @@ input[type="range"]::-moz-range-thumb {
 .icon-btn--danger { color: var(--danger); background: var(--danger-soft); border-color: color-mix(in srgb, var(--danger) 30%, transparent); }
 .icon-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 
-/* --------------------------------------------------------- 7. Ads --- */
-/* Reserved placeholders for future AdSense. They are deliberately neutral so
-   they can never be mistaken for a tool control. To remove them completely,
-   delete every element with [data-ad-slot]. */
-.ad-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  min-height: 92px;
-  margin: 26px 0;
-  padding: 12px 16px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--bg-alt);
-  text-align: center;
-}
-.ad-slot-tag {
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border: 1px solid var(--border-strong);
-  border-radius: 4px;
-  padding: 2px 7px;
-}
-.ad-slot-note { font-size: 0.82rem; color: var(--text-muted); }
-
 /* ------------------------------------------------------- 8. Content --- */
 .privacy-card {
   display: flex;
@@ -921,6 +902,9 @@ input[type="range"]::-moz-range-thumb {
   .result-table th, .result-table td { padding: 9px 7px; font-size: 0.87rem; }
   .cell-actions { justify-content: flex-end; }
   .dropzone { padding: 26px 14px; }
+  body.has-floating-actions { padding-bottom: calc(132px + env(safe-area-inset-bottom)); }
+  .action-bar[data-download-ready="true"] { flex-wrap: nowrap; gap: 8px; padding: 10px 12px; }
+  .action-bar[data-download-ready="true"] .btn { flex: 1 1 0; min-width: 0; padding-inline: 10px; font-size: 0.9rem; }
 }
 
 @media (max-width: 400px) {
@@ -943,5 +927,5 @@ input[type="range"]::-moz-range-thumb {
 .warnings { display: grid; gap: 10px; margin-bottom: 18px; }
 
 @media print {
-  .site-header, .site-footer, .ad-slot, #compressor, .btn { display: none !important; }
+  .site-header, .site-footer, #compressor, .btn { display: none !important; }
 }

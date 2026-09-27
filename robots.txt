@@ -1,5 +1,6 @@
 # robots.txt for the Free Image Compressor site.
-# Replace example.com with your own host before publishing (see README).
+# Public site: https://freecompress.in/
+Sitemap: https://freecompress.in/sitemap.xml
 
 User-agent: *
 Allow: /
