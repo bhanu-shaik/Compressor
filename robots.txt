@@ -1,0 +1,9 @@
+# robots.txt for the Free Image Compressor site.
+# Replace example.com with your own host before publishing (see README).
+
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+# No user images are stored on this site, so there is nothing private to hide
+# and no upload or API endpoint for a crawler to reach.

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online</title>
+<meta name="description" content="Compress JPG, PNG and WebP images online for free. Reduce image file size directly in your browser without uploading your images to a server.">
+<link rel="canonical" href="https://www.example.com/">
+<meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Free Image Compressor">
+<meta property="og:title" content="Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online">
+<meta property="og:description" content="Reduce image file size directly in your browser. Your images are processed on your own device and never uploaded to a server.">
+<meta property="og:url" content="https://www.example.com/">
+<meta property="og:image" content="https://www.example.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Free Image Compressor tool interface with a drag and drop upload area">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online">
+<meta name="twitter:description" content="Reduce image file size directly in your browser. Your images are processed on your own device and never uploaded to a server.">
+<meta name="twitter:image" content="https://www.example.com/assets/og-image.png">
+<meta name="twitter:image:alt" content="Free Image Compressor tool interface with a drag and drop upload area">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#compressor">Skip to the image compressor</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="./index.html" aria-label="Free Image Compressor home">
+      <img class="brand-mark" src="assets/favicon.svg" alt="" width="32" height="32" aria-hidden="true">
+      <span class="brand-name">Image <span class="brand-accent">Compressor</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#compressor">Compressor</a>
+      <a href="#faq">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">Free Image Compressor</h1>
+      <p class="hero-subtitle">
+        Compress JPG, PNG and WebP images directly in your browser.
+        Your images never need to leave your device.
+      </p>
+      <ul class="trust-list" role="list">
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">&#10003;</span> Processed on your device
+        </li>
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">&#10003;</span> No sign-up
+        </li>
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">&#10003;</span> Free, no limits on count
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================ TOOL ============================ -->
+  <section id="compressor" class="tool-section" aria-labelledby="tool-heading">
+    <div class="container">
+      <h2 id="tool-heading" class="visually-hidden">Image compressor tool</h2>
+
+      <!-- ---------- Upload area and options, side by side on wide screens ---------- -->
+      <!-- Two columns above 860px so the options sit beside the Choose Image
+           area instead of below it. Single column below that. -->
+      <div class="tool-grid">
+
+        <!-- Column 1: get the images in -->
+        <div class="tool-pane">
+          <!-- ---------- Drop zone ---------- -->
+          <div class="card dropzone-card">
+            <div id="dropzone" class="dropzone" data-state="idle">
+              <svg class="dropzone-icon" viewBox="0 0 48 48" role="img" aria-label="Upload image icon" focusable="false">
+                <path d="M24 32V12m0 0-8 8m8-8 8 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 30v6a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4v-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="dropzone-title">Drag &amp; Drop your image here</p>
+              <p class="dropzone-or">or</p>
+              <label class="btn btn-primary btn-choose" for="file-input">Choose Image</label>
+              <p class="dropzone-formats" id="dropzone-formats">JPG &bull; PNG &bull; WebP</p>
+              <input class="visually-hidden" type="file" id="file-input"
+                     accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                     aria-describedby="dropzone-formats"
+                     multiple>
+              <p class="dropzone-browse-hint" id="dropzone-browse-hint">
+                Tip: you can also paste an image from your clipboard with <kbd>Ctrl</kbd>+<kbd>V</kbd>.
+              </p>
+            </div>
+          </div>
+
+          <div id="workspace" class="workspace" hidden>
+
+            <!-- Selected files -->
+            <section class="card" aria-labelledby="files-heading">
+              <div class="card-head">
+                <h3 class="card-title" id="files-heading">Selected images</h3>
+                <button type="button" class="btn btn-ghost btn-sm" id="clear-all">Remove all</button>
+              </div>
+              <ul class="filelist" id="filelist"></ul>
+            </section>
+
+            <!-- Warnings (large images / memory) -->
+            <div id="warnings" class="warnings" role="alert" hidden></div>
+          </div>
+        </div>
+
+        <!-- Column 2: how to compress them -->
+        <div class="tool-pane">
+          <!-- Settings -->
+          <section class="card settings-card" aria-labelledby="settings-heading">
+            <h3 class="card-title" id="settings-heading">Compression settings</h3>
+
+            <div class="settings-grid">
+              <!-- Quality -->
+              <div class="field field-quality">
+                <div class="field-head">
+                  <label class="field-label" for="quality">Compression Quality</label>
+                  <output class="field-value" id="quality-value" for="quality">80</output>
+                </div>
+                <input type="range" id="quality" name="quality" min="10" max="100" step="1" value="80"
+                       aria-describedby="quality-hint">
+                <p class="field-hint" id="quality-hint">
+                  Higher quality means a larger file and a closer match to the original.
+                  <span id="quality-mode-note"></span>
+                </p>
+              </div>
+
+              <!-- Output format -->
+              <div class="field">
+                <label class="field-label" for="output-format">Output Format</label>
+                <select id="output-format" name="output-format" aria-describedby="format-hint">
+                  <option value="keep" selected>Keep original</option>
+                  <option value="jpeg">JPG</option>
+                  <option value="png">PNG</option>
+                  <option value="webp">WebP</option>
+                </select>
+                <p class="field-hint" id="format-hint">Converting between formats can change appearance or transparency.</p>
+              </div>
+
+              <!-- Target size -->
+              <div class="field">
+                <label class="field-label" for="target-size">Target File Size</label>
+                <select id="target-size" name="target-size" aria-describedby="target-hint">
+                  <option value="quality" selected>Original quality mode</option>
+                  <option value="50000">50 KB</option>
+                  <option value="100000">100 KB</option>
+                  <option value="200000">200 KB</option>
+                  <option value="500000">500 KB</option>
+                  <option value="1048576">1 MB</option>
+                  <option value="custom">Custom&hellip;</option>
+                </select>
+                <p class="field-hint" id="target-hint">
+                  Quality is adjusted automatically to try to reach the target. The exact size is not guaranteed.
+                </p>
+                <div class="custom-target" id="custom-target" hidden>
+                  <label class="field-label" for="custom-target-input">Custom target size</label>
+                  <div class="input-suffix">
+                    <input type="number" id="custom-target-input" inputmode="numeric" min="1" max="104857600" step="1" value="150000" placeholder="150000">
+                    <span class="input-suffix-text" aria-hidden="true">bytes</span>
+                  </div>
+                  <p class="field-hint" id="custom-target-hint">Value is in bytes (150000 bytes &asymp; 146 KB).</p>
+                </div>
+              </div>
+
+              <!-- Resize -->
+              <div class="field">
+                <label class="field-label" for="max-dimension">Resize Large Images</label>
+                <select id="max-dimension" name="max-dimension" aria-describedby="max-dimension-hint">
+                  <option value="0" selected>Keep original dimensions</option>
+                  <option value="3840">Max 3840 px (4K)</option>
+                  <option value="2560">Max 2560 px</option>
+                  <option value="1920">Max 1920 px</option>
+                  <option value="1280">Max 1280 px</option>
+                  <option value="800">Max 800 px</option>
+                </select>
+                <p class="field-hint" id="max-dimension-hint">
+                  Off by default. Images are never resized unless you choose an option here.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ---------- Global status / progress ---------- -->
+      <div id="status-bar" class="status-bar" role="status" aria-live="polite" hidden>
+        <span class="status-icon" aria-hidden="true"></span>
+        <span class="status-text" id="status-text">Waiting for image</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </div>
+
+      <!-- ---------- Rejected files ---------- -->
+      <div id="rejected" class="rejected" role="alert" hidden>
+        <h3 class="rejected-title" id="rejected-title">Some files were not added</h3>
+        <ul class="rejected-list" id="rejected-list" aria-labelledby="rejected-title"></ul>
+      </div>
+
+      <!-- ---------- Actions ---------- -->
+      <!-- One permanent bar under the tool, so Compress and Download always sit
+           in the same place instead of at the bottom of the results. -->
+      <div class="action-bar">
+        <button type="button" class="btn btn-primary btn-lg" id="compress-btn">
+          Compress Image
+        </button>
+        <button type="button" class="btn btn-ghost" id="cancel-btn" hidden>Cancel</button>
+        <button type="button" class="btn btn-primary btn-lg" id="download-btn" hidden>
+          Download Compressed Image
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" id="download-all-btn" hidden>
+          Download All (ZIP)
+        </button>
+      </div>
+
+      <!-- Single image result -->
+      <section class="card result-card" id="single-result" aria-labelledby="result-heading" hidden>
+        <div class="card-head">
+          <h3 class="card-title" id="result-heading">Result</h3>
+          <span class="badge" id="single-filename"></span>
+        </div>
+
+        <div class="stats" id="single-stats" role="group" aria-label="Compression result summary"></div>
+
+        <div class="notice notice-info" id="single-notice" hidden></div>
+
+        <div class="compare">
+          <figure class="compare-card">
+            <figcaption class="compare-caption">Original</figcaption>
+            <div class="compare-frame">
+              <img id="single-before-img" alt="" decoding="async">
+            </div>
+            <dl class="compare-meta" id="single-before-meta"></dl>
+          </figure>
+          <figure class="compare-card">
+            <figcaption class="compare-caption">Compressed</figcaption>
+            <div class="compare-frame">
+              <img id="single-after-img" alt="" decoding="async">
+            </div>
+            <dl class="compare-meta" id="single-after-meta"></dl>
+          </figure>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-secondary" id="another-btn">Compress Another Image</button>
+        </div>
+      </section>
+
+      <!-- Multiple image result -->
+      <section class="card result-card" id="multi-result" aria-labelledby="multi-heading" hidden>
+        <div class="card-head">
+          <h3 class="card-title" id="multi-heading">Results</h3>
+          <span class="badge" id="multi-summary"></span>
+        </div>
+
+        <div class="notice notice-info" id="multi-notice" hidden></div>
+
+        <div class="table-wrap">
+          <table class="result-table">
+            <caption class="visually-hidden">Compression results for each selected image</caption>
+            <thead>
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col" class="num">Original</th>
+                <th scope="col" class="num">Compressed</th>
+                <th scope="col" class="num">Saved</th>
+                <th scope="col" class="action-col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="multi-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-secondary" id="multi-another-btn">Compress Another Image</button>
+        </div>
+        <p class="fine-print">The ZIP archive is generated in your browser using your device's memory.</p>
+      </section>
+
+      <!-- ============ AD SLOT 1: above informational content ============ -->
+      <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
+      <aside class="ad-slot" data-ad-slot="above-content" aria-label="Advertisement">
+        <span class="ad-slot-tag">Advertisement</span>
+        <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
+      </aside>
+
+      <!-- ============================ PRIVACY ============================ -->
+      <section class="card privacy-card" id="privacy" aria-labelledby="privacy-heading">
+        <div class="privacy-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2 4 5.5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5v-6L12 2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.7 12 2.3 2.3 4.4-4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h2 class="card-title" id="privacy-heading">Your images stay private</h2>
+          <p>
+            Images are processed directly in your browser. They do not need to be uploaded to our servers.
+          </p>
+          <p>
+            This site has no upload endpoint. When you choose a file, your browser reads it locally,
+            the compression runs on your own device using JavaScript and the Canvas API, and the
+            result is handed straight back to you for download.
+          </p>
+          <p class="fine-print">
+            We also do not store filenames, file contents, user accounts or compression history.
+            See the <a href="privacy.html">Privacy Policy</a> for details.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ AD SLOT 2: between tool and FAQ ============ -->
+      <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
+      <aside class="ad-slot" data-ad-slot="before-faq" aria-label="Advertisement">
+        <span class="ad-slot-tag">Advertisement</span>
+        <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
+      </aside>
+
+      <!-- ============================ CONTENT ============================ -->
+      <div class="content" id="guide">
+
+        <section aria-labelledby="what-heading">
+          <h2 id="what-heading">What is an image compressor?</h2>
+          <p>
+            An image compressor makes an image file smaller while keeping it useful. A photo taken on a
+            modern phone can easily be 4&nbsp;MB or more, and a screenshot of a text document might be a few
+            hundred kilobytes. Much of that size is detail the file does not need in order to look the way
+            you want it to.
+          </p>
+          <p>
+            Compressing rewrites the image with a more compact representation. For JPG and WebP that means
+            storing slightly simplified detail &mdash; called lossy compression. For PNG it usually means
+            reducing the number of distinct colours in the image, which is why a screenshot can often shrink
+            by 80% or more while a detailed photo shrinks by less.
+          </p>
+          <p>
+            The <a href="#compressor">compressor on this page</a> does that work on your own device, so you can
+            compress a photo before you attach it to an email, upload it to a form with a strict size limit,
+            or publish it on a page you want to load quickly.
+          </p>
+        </section>
+
+        <section aria-labelledby="why-heading">
+          <h2 id="why-heading">Why compress images?</h2>
+          <ul class="feature-list">
+            <li>
+              <h3>Smaller files</h3>
+              <p>Fewer kilobytes means less waiting &mdash; when uploading an email attachment, a portfolio
+              or a folder of product photos.</p>
+            </li>
+            <li>
+              <h3>Faster website loading</h3>
+              <p>Images are usually the heaviest part of a page. Every kilobytes you remove shortens load
+              times, especially on mobile connections.</p>
+            </li>
+            <li>
+              <h3>Easier sharing</h3>
+              <p>Many services cap attachment size. A 2.4&nbsp;MB photo that becomes 640&nbsp;KB passes limits
+              that would otherwise reject it.</p>
+            </li>
+            <li>
+              <h3>Reduced storage</h3>
+              <p>Across a large photo library, shrinking each file frees up meaningful space on your device,
+              your backup drive or your hosting plan.</p>
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="formats-heading">
+          <h2 id="formats-heading">Supported formats</h2>
+          <dl class="format-list">
+            <dt>JPG (JPEG)</dt>
+            <dd>
+              The standard format for photographs. It has no transparency, and it offers the most flexible
+              quality control, which makes it the best choice for photos, scans and anything with gradients.
+            </dd>
+            <dt>PNG</dt>
+            <dd>
+              The standard format for graphics, logos, screenshots and anything that needs sharp edges or a
+              transparent background. A quality slider does not apply to PNG, so this tool reduces PNG size by
+              cutting the number of colours while keeping transparency intact. Converting a transparent PNG to
+              JPG removes the transparency, so you will be warned first.
+            </dd>
+            <dt>WebP</dt>
+            <dd>
+              A modern format that usually beats JPG on size at the same perceived quality, and unlike JPG it
+              supports transparency. It is supported by all current versions of Chrome, Edge, Firefox and Safari.
+            </dd>
+          </dl>
+          <p>
+            You can keep the original format or convert between the three. If you are unsure, keeping the
+            original format is the safest choice.
+          </p>
+        </section>
+
+        <section aria-labelledby="how-heading">
+          <h2 id="how-heading">How to compress an image</h2>
+          <ol class="steps">
+            <li>
+              <h3>Add your image</h3>
+              <p>Drag a JPG, PNG or WebP file onto the upload area at the top of this page, or press
+              <strong>Choose Image</strong> to pick one. You can select several files at once.</p>
+            </li>
+            <li>
+              <h3>Choose your settings</h3>
+              <p>Set the compression quality, pick an output format, and &mdash; if a portal or platform gives
+              you a strict limit &mdash; choose a target file size instead of a fixed quality.</p>
+            </li>
+            <li>
+              <h3>Compress and compare</h3>
+              <p>Press <strong>Compress Image</strong>. The result, the new file size and the percentage saved
+              appear next to the original so you can check the quality before you use it.</p>
+            </li>
+            <li>
+              <h3>Download</h3>
+              <p>Save the compressed file, or use <strong>Download All</strong> to get every image in a single
+              ZIP archive built in your browser.</p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- ============ AD SLOT 3: below FAQ ============ -->
+        <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
+        <aside class="ad-slot" data-ad-slot="below-faq" aria-label="Advertisement">
+          <span class="ad-slot-tag">Advertisement</span>
+          <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
+        </aside>
+
+        <section id="faq" aria-labelledby="faq-heading">
+          <h2 id="faq-heading">Frequently asked questions</h2>
+
+          <details class="faq-item">
+            <summary>Is this image compressor free?</summary>
+            <p>Yes. There is no account, no trial and no watermark. The tool runs entirely in your browser,
+            so there is no server cost to pass on.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Are my images uploaded?</summary>
+            <p>No. Your browser reads the file from your device, the compression code runs on your device, and
+            the compressed result is handed straight back to you. This site contains no code that sends your
+            images anywhere, and the <a href="privacy.html">Privacy Policy</a> explains the details.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What image formats are supported?</summary>
+            <p>JPG/JPEG, PNG and WebP, both as the input format and as the output format. Other file types are
+            rejected with a clear message.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does image compression reduce quality?</summary>
+            <p>It can, and to a degree you choose. JPG and WebP compression is lossy: the higher the quality
+            setting, the closer the result is to the original. The before-and-after previews let you compare
+            them yourself. PNG compression on this tool reduces the number of colours, which suits screenshots
+            and graphics and is usually a poor trade for detailed photographs.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I compress JPG images?</summary>
+            <p>Yes. JPG is the best-supported format here: set the quality slider, or choose a target file
+            size and the quality is adjusted for you.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I compress PNG images?</summary>
+            <p>Yes. Because a PNG quality slider behaves nothing like a JPG one, this tool shrinks PNGs by
+            reducing the colour palette and by switching to a smaller greyscale depth where the image allows
+            it. Transparency is preserved. If your PNG is a detailed photograph, converting it to JPG or WebP
+            usually gives a much smaller file.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I compress WebP images?</summary>
+            <p>Yes. WebP can be compressed to WebP, and it can be converted to JPG or PNG if a service you
+            need to upload to does not accept WebP.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I compress multiple images?</summary>
+            <p>Yes. Select or drop several files at once. They are processed one after another, each one can be
+            downloaded on its own, and <strong>Download All</strong> packages the results into a ZIP file
+            created in your browser.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Will the result be exactly the size I asked for?</summary>
+            <p>No. A target size is a goal, not a guarantee. The tool searches for the highest quality that fits
+            under the target. If reaching it would mean visibly damaging the image, it stops and tells you
+            instead, and suggests a larger target or smaller dimensions.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Are large images resized automatically?</summary>
+            <p>No. Dimensions are only changed if you pick a limit in the <strong>Resize Large Images</strong>
+            menu. Very large images are flagged with a warning, because processing them uses a lot of your
+            device's memory.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does it work on mobile?</summary>
+            <p>Yes. The layout adapts to phone screens, the upload button is large enough to tap comfortably,
+            and the compression runs on your phone's own processor. Processing a very large image on an older
+            phone can take a few seconds.</p>
+          </details>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="sitemap.xml">Sitemap</a>
+    </nav>
+    <p class="footer-note">
+      All image processing happens locally in your browser. No uploads, no accounts, no tracking of your files.
+    </p>
+    <p class="footer-copy">&copy; <span id="year">2026</span> Free Image Compressor</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.example.com/#app",
+      "name": "Free Image Compressor",
+      "url": "https://www.example.com/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "description": "Compress JPG, PNG and WebP images in your browser. Images are processed on the user's device and are not uploaded to a server.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Compress JPG, PNG and WebP images locally in the browser",
+        "No upload of user images",
+        "Adjustable compression quality",
+        "Target file size mode",
+        "Batch compression with in-browser ZIP download"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.example.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this image compressor free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. There is no account, no trial and no watermark. The tool runs entirely in your browser, so there is no server cost to pass on." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my images uploaded?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Your browser reads the file from your device, the compression code runs on your device, and the compressed result is handed straight back to you. This site contains no code that sends your images anywhere, and the Privacy Policy explains the details." }
+        },
+        {
+          "@type": "Question",
+          "name": "What image formats are supported?",
+          "acceptedAnswer": { "@type": "Answer", "text": "JPG/JPEG, PNG and WebP, both as the input format and as the output format. Other file types are rejected with a clear message." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does image compression reduce quality?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It can, and to a degree you choose. JPG and WebP compression is lossy: the higher the quality setting, the closer the result is to the original. The before-and-after previews let you compare them yourself. PNG compression on this tool reduces the number of colours, which suits screenshots and graphics and is usually a poor trade for detailed photographs." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compress JPG images?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. JPG is the best-supported format here: set the quality slider, or choose a target file size and the quality is adjusted for you." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compress PNG images?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Because a PNG quality slider behaves nothing like a JPG one, this tool shrinks PNGs by reducing the colour palette and by switching to a smaller greyscale depth where the image allows it. Transparency is preserved. If your PNG is a detailed photograph, converting it to JPG or WebP usually gives a much smaller file." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compress WebP images?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. WebP can be compressed to WebP, and it can be converted to JPG or PNG if a service you need to upload to does not accept WebP." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compress multiple images?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Select or drop several files at once. They are processed one after another, each one can be downloaded on its own, and Download All packages the results into a ZIP file created in your browser." }
+        },
+        {
+          "@type": "Question",
+          "name": "Will the result be exactly the size I asked for?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. A target size is a goal, not a guarantee. The tool searches for the highest quality that fits under the target. If reaching it would mean visibly damaging the image, it stops and tells you instead, and suggests a larger target or smaller dimensions." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are large images resized automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Dimensions are only changed if you pick a limit in the Resize Large Images menu. Very large images are flagged with a warning, because processing them uses a lot of your device's memory." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work on mobile?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The layout adapts to phone screens, the upload button is large enough to tap comfortably, and the compression runs on your phone's own processor. Processing a very large image on an older phone can take a few seconds." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="js/compressor.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

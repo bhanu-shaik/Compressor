@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About &ndash; Free Image Compressor</title>
+<meta name="description" content="Why this free image compressor exists, how the browser-based compression works, and what it deliberately does not do.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.example.com/about.html">
+<meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Free Image Compressor">
+<meta property="og:title" content="About &ndash; Free Image Compressor">
+<meta property="og:description" content="Why this free image compressor exists and how the browser-based compression works.">
+<meta property="og:url" content="https://www.example.com/about.html">
+<meta property="og:image" content="https://www.example.com/assets/og-image.png">
+<meta property="og:image:alt" content="Free Image Compressor">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="./index.html" aria-label="Free Image Compressor home">
+      <img class="brand-mark" src="assets/favicon.svg" alt="" width="32" height="32" aria-hidden="true">
+      <span class="brand-name">Image <span class="brand-accent">Compressor</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Compressor</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <div class="page-header">
+      <h1>About this image compressor</h1>
+    </div>
+
+    <div class="card prose">
+      <p>
+        Most &ldquo;compress my image&rdquo; websites work the same way: you upload your photo
+        to somebody else&rsquo;s computer, wait while it is processed on their server, and then
+        download the result. That is a reasonable design for a photo-sharing service. It is a
+        poor fit for a document, a passport photo, a client deliverable or anything else you
+        would rather not hand to a stranger&rsquo;s server.
+      </p>
+      <p>
+        This tool takes the opposite approach. The compression runs on your own device, in
+        your own browser, and your images are never uploaded. That is not a policy promise
+        &mdash; it is simply how the code works. There is no upload endpoint to opt out of.
+      </p>
+
+      <h2>Why it is free</h2>
+      <p>
+        There is no server doing the work, so there is no per-image cost to pass on. The site
+        is a handful of static files served from GitHub Pages, which is free hosting. That is
+        the entire business model.
+      </p>
+
+      <h2>How it actually works</h2>
+      <p>
+        Your browser already knows how to read images and how to write them back out &mdash;
+        that is what the <code>File</code> API, <code>createImageBitmap()</code> and the Canvas
+        API are for. This site uses those built-in capabilities and adds two things of its own:
+      </p>
+      <ul>
+        <li>
+          <strong>A real PNG compressor.</strong> A PNG quality slider does not exist, so this
+          tool shrinks PNG files the way that actually works: it builds a colour palette with
+          median-cut quantisation, refines it, optionally dithers the result, and writes the
+          image out as an indexed-colour PNG with adaptive scanline filtering. Transparent
+          images keep their transparency. Greyscale images that fit a 1, 2 or 4 bit depth are
+          stored losslessly at that depth.
+        </li>
+        <li>
+          <strong>A size search.</strong> If you give it a target file size, it binary-searches
+          for the highest quality that still fits, rather than guessing. It stops before the
+          picture becomes unusable and tells you when the target could not be reached.
+        </li>
+      </ul>
+      <p>
+        Large images are processed in a <a href="https://developer.mozilla.org/docs/Web/API/Web_Workers_API" rel="noopener nofollow">Web Worker</a>,
+        so the page keeps responding while a big file is being worked on. If your browser
+        cannot run a worker, the same code runs on the main page instead.
+      </p>
+
+      <h2>What it deliberately does not do</h2>
+      <ul>
+        <li>No accounts, no sign-in, no email required.</li>
+        <li>No watermark and no cap on how many images you compress.</li>
+        <li>No analytics and no third-party scripts.</li>
+        <li>No automatic resizing. Dimensions change only if you ask for it.</li>
+        <li>No pretending a PNG quality slider means the same thing as a JPG one.</li>
+      </ul>
+
+      <h2>Advertising</h2>
+      <p>
+        The plan is to keep the tool free and cover hosting with Google AdSense at some point.
+        When that happens, ads will appear in clearly marked areas away from the upload and
+        download controls, and this page and the
+        <a href="privacy.html">Privacy Policy</a> will be updated first. Your file choices,
+        filenames and image contents will never be shared with an advertising system.
+      </p>
+
+      <h2>Open source</h2>
+      <p>
+        The whole site is plain HTML, CSS and JavaScript with no build step and no
+        third-party libraries. You can read every line that runs on your machine, and if you
+        prefer, you can run a copy yourself.
+      </p>
+
+      <h2>Found a problem?</h2>
+      <p>
+        Please <a href="contact.html">get in touch</a> &mdash; bug reports about specific browsers,
+        file types or file sizes are the most useful thing you can send.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="sitemap.xml">Sitemap</a>
+    </nav>
+    <p class="footer-note">
+      All image processing happens locally in your browser. No uploads, no accounts, no tracking of your files.
+    </p>
+    <p class="footer-copy">&copy; 2026 Free Image Compressor</p>
+  </div>
+</footer>
+</body>
+</html>

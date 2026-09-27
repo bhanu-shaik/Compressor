@@ -1,0 +1,23 @@
+{
+  "name": "Free Image Compressor",
+  "short_name": "Image Compressor",
+  "description": "Compress JPG, PNG and WebP images in your browser. Images are processed on your device and are not uploaded to a server.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

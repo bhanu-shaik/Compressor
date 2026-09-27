@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy &ndash; Free Image Compressor</title>
+<meta name="description" content="How Free Image Compressor handles your data. Images are compressed in your browser and are never uploaded to our servers. No accounts, no image storage, no file history.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.example.com/privacy.html">
+<meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Free Image Compressor">
+<meta property="og:title" content="Privacy Policy &ndash; Free Image Compressor">
+<meta property="og:description" content="Images are compressed in your browser and are never uploaded to our servers. No accounts, no image storage, no file history.">
+<meta property="og:url" content="https://www.example.com/privacy.html">
+<meta property="og:image" content="https://www.example.com/assets/og-image.png">
+<meta property="og:image:alt" content="Free Image Compressor">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="./index.html" aria-label="Free Image Compressor home">
+      <img class="brand-mark" src="assets/favicon.svg" alt="" width="32" height="32" aria-hidden="true">
+      <span class="brand-name">Image <span class="brand-accent">Compressor</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html">Compressor</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <div class="page-header">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: <time datetime="2026-09-27">27 September 2026</time></p>
+    </div>
+
+    <div class="card prose">
+      <p>
+        This policy explains what happens to your data when you use this website.
+        It is written to match how the site actually works, not to describe a
+        system we do not have. If you find any statement here that does not match
+        what the code does, please tell us through the <a href="contact.html">contact page</a>.
+      </p>
+
+      <h2>The short version</h2>
+      <ul>
+        <li>Your images are processed by your own browser. They are never uploaded to us.</li>
+        <li>We do not store images, filenames, image contents or compressed files.</li>
+        <li>We do not have user accounts and we keep no history of what you compressed.</li>
+        <li>There is no analytics or advertising code on the site at present.</li>
+      </ul>
+
+      <h2>How image compression works here</h2>
+      <p>
+        This is a static website. When you choose a file, your browser reads it from
+        your own device using its built-in file API. A JavaScript program in your
+        browser then re-encodes the image using the Canvas API, and the result is
+        handed straight back to you as a download. The work runs in a Web Worker so
+        the page stays responsive, and the PNG encoder uses the browser's own
+        built-in deflate compression. Your image's dimensions change only if you pick
+        a resize limit yourself; nothing is ever resized behind your back.
+      </p>
+      <p>
+        The page contains no code that transmits your images anywhere. There is no
+        upload endpoint, no server-side image processing, no cloud storage bucket and
+        no third-party image service. Compressing an image never involves a
+        network request carrying the image.
+      </p>
+      <p>
+        Closing or reloading the page discards everything. Nothing about your images
+        survives in the site, because nothing about your images ever reaches the site.
+      </p>
+
+      <h2>What is not collected</h2>
+      <p>The site has no backend, so the following never exist and are never written anywhere:</p>
+      <ul>
+        <li>Uploaded images or image data of any kind</li>
+        <li>Filenames, file sizes or image dimensions</li>
+        <li>Compressed output files</li>
+        <li>User accounts, sign-ins or authentication data</li>
+        <li>Compression history, saved settings or favourites</li>
+        <li>Cookies set by this site</li>
+      </ul>
+
+      <h2>Object URLs in your browser</h2>
+      <p>
+        To show previews, the page creates <em>object URLs</em>: temporary links that
+        point at image data held in your own browser memory. They never leave your
+        device and they are not accessible to this site or to anyone else. Each one is
+        released as soon as it is no longer needed, and all of them are released if you
+        navigate away.
+      </p>
+
+      <h2>Server logs</h2>
+      <p>
+        This site is hosted on GitHub Pages, a static hosting service. Like any web
+        host, GitHub may process standard technical request data such as IP address,
+        user agent and requested URL in order to serve pages and prevent abuse. That
+        processing is governed by the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener nofollow">GitHub Privacy Statement</a>,
+        not by us, and it never contains the contents of your images because your images
+        are never sent.
+      </p>
+
+      <h2>Third parties and advertising</h2>
+      <p>
+        At the time of writing there is no analytics, no advertising script, no social
+        media widget, no font CDN and no third-party library on this site. The pages
+        load only their own HTML, CSS, JavaScript and images.
+      </p>
+      <p>
+        Advertising is planned for a future version. When it is added it will use
+        Google AdSense, and this policy will be updated before that happens to state:
+      </p>
+      <ul>
+        <li>that advertising cookies and similar technologies may be set by Google and its partners;</li>
+        <li>that your file choices, filenames, image contents and compression settings will
+            <strong>never</strong> be sent to any advertising or analytics system, and will not
+            be used to build a profile of you;</li>
+        <li>how to opt out of personalised advertising.</li>
+      </ul>
+      <p>
+        Reserved space for advertising exists in the page layout today, but nothing is
+        displayed in it.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        The service is a general-purpose image utility and is not directed at children.
+        Because we collect no personal data from anyone, we collect none from children
+        either.
+      </p>
+
+      <h2>Your choices</h2>
+      <p>
+        There is nothing to manage, export or delete, because nothing is kept. You can
+        also block this site entirely in your browser, or clear the temporary image data
+        it holds by closing the tab.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        If the way the site works changes, this policy will be updated in step with the
+        code, and the &ldquo;last updated&rdquo; date above will change. Material changes will
+        also be noted on the <a href="index.html">homepage</a>.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy can be sent through the <a href="contact.html">contact page</a>.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="sitemap.xml">Sitemap</a>
+    </nav>
+    <p class="footer-note">
+      All image processing happens locally in your browser. No uploads, no accounts, no tracking of your files.
+    </p>
+    <p class="footer-copy">&copy; 2026 Free Image Compressor</p>
+  </div>
+</footer>
+</body>
+</html>
