@@ -198,21 +198,20 @@ replaced with your own before you publish.
 
 | Placeholder | Where it appears | Replace with |
 | --- | --- | --- |
-| `https://www.example.com/` | `index.html`, `privacy.html`, `terms.html`, `about.html`, `contact.html` (canonical link, `og:url`, `og:image`, `twitter:image`, JSON-LD `@id` and `url`), and `sitemap.xml` | Your real site root, with a trailing slash, e.g. `https://username.github.io/repo-name/` |
+| `https://freecompress.in/` | `index.html`, `privacy.html`, `terms.html`, `about.html`, `contact.html` (canonical link, `og:url`, `og:image`, `twitter:image`, JSON-LD `@id` and `url`), `robots.txt`, and `sitemap.xml` | The configured public site root. Update these references together if your domain changes. |
 | `hello@example.com` | `contact.html` (`mailto:` link and visible address) | A real mailbox you control |
-| `example.com` (bare) | `robots.txt` and `contact.html` comments | Your host |
 
 A reliable way to do the first one across every file at once:
 
 ```powershell
 # Run from the project folder. Replace BOTH values.
-$root = "https://username.github.io/repo-name/"
+$root = "https://freecompress.in/"
 $mail = "you@yourdomain.com"
 
 Get-ChildItem -Path . -Include *.html,*.xml,*.txt -Recurse |
   ForEach-Object {
     $c = Get-Content $_.FullName -Raw
-    $c = $c.Replace("https://www.example.com/", $root)
+    $c = $c.Replace("https://freecompress.in/", $root)
     $c = $c.Replace("hello@example.com", $mail)
     Set-Content -Path $_.FullName -Value $c -NoNewline
   }
@@ -317,11 +316,9 @@ You can attach a domain after the site is already live on GitHub Pages.
    value GitHub displays, to prove the domain is yours.
 3. Set **Enforce HTTPS** once DNS has resolved, so visitors cannot land on the
    insecure origin.
-4. Update the placeholders in every HTML file and in `sitemap.xml` to
-   `https://yourdomain.org/`, using the method
-   [above](#before-you-publish--replace-the-placeholders). Do this in the same
-   commit that the domain starts serving, or search results will briefly show
-   the old URL.
+4. The canonical URLs and sitemap are configured for `https://freecompress.in/`.
+  If the production host or domain changes, update all references together using
+  the method [above](#before-you-publish--replace-the-placeholders).
 5. Update the sitemap in Google Search Console to the new domain.
 
 GitHub serves the site from the `docs/` folder, the branch you selected, or the
@@ -330,24 +327,14 @@ file layout, so nothing else needs touching.
 
 ---
 
-## Editing the advertisement placeholders
+## Advertising
 
-There are three reserved areas, and **no real ads are loaded**:
-
-| `data-ad-slot` | Position |
-| --- | --- |
-| `above-content` | above the main content, under the header |
-| `before-faq` | between the tool and the FAQ |
-| `below-faq` | after the FAQ |
-
-Each is an `<aside class="ad-slot">` wrapped in an HTML comment explaining that
-it is safe to delete. To remove one, delete the whole element. To add a real ad
-later, replace the element's contents with the ad network's snippet. Never place
-an ad inside the upload button or immediately beside a download button.
-
-If you do add an ad network, update `privacy.html` **before** it goes live, since
-that page currently states there is no advertising code. It already contains the
-wording to use.
+The current production build is ad-free and contains no ad scripts or empty ad
+placeholders. If advertising is added later, choose a provider and create its ad
+units before adding the provider's snippet. Keep ads clearly labeled and away
+from upload and download controls. Update `about.html`, `privacy.html`, and
+`terms.html` with the actual provider and data practices before enabling ads;
+never publish disclosures that do not match the integration.
 
 ---
 
@@ -440,7 +427,8 @@ Run through this before each deploy.
 
 ### Deployment
 
-- [ ] `example.com` and `example.com` email are fully replaced.
+- [ ] `hello@example.com` is replaced with a monitored support mailbox.
+- [ ] All canonical URLs and sitemap entries use `https://freecompress.in/`.
 - [ ] `robots.txt` and `sitemap.xml` load over HTTP.
 - [ ] The sitemap lists the real domain.
 - [ ] `404.html` is served for a missing path.

@@ -43,6 +43,7 @@
 
     compressBtn: el('compress-btn'),
     cancelBtn: el('cancel-btn'),
+    actionBar: el('action-bar'),
 
     singleResult: el('single-result'),
     singleFilename: el('single-filename'),
@@ -557,6 +558,7 @@
     running = true;
     setControlsBusy(true);
     queue.forEach(function (item) { item.status = 'queued'; item.error = null; });
+    renderResults();
     renderFileList();
     updateSummaryStatus();
 
@@ -604,7 +606,6 @@
       setControlsBusy(false);
       renderResults();
       updateSummaryStatus();
-      revealResults();
     }
 
     next();
@@ -619,6 +620,7 @@
       if (item.status === 'working' || item.status === 'queued') { item.status = 'queued'; }
     });
     renderFileList();
+    renderResults();
     updateSummaryStatus();
   }
 
@@ -686,7 +688,10 @@
     items.forEach(function (item) {
       if (item.status === 'done') { item.status = 'stale'; changed = true; }
     });
-    if (changed) { renderFileList(); }
+    if (changed) {
+      renderFileList();
+      renderResults();
+    }
   }
 
   /* ======================================================================
@@ -695,6 +700,14 @@
 
   function renderResults() {
     var done = items.filter(function (item) { return item.status === 'done'; });
+    var needsCompression = items.some(function (item) { return item.status !== 'done'; });
+    var downloadReady = done.length > 0 && !running;
+    dom.actionBar.hidden = !running && done.length === 0;
+    dom.actionBar.dataset.downloadReady = downloadReady ? 'true' : 'false';
+    dom.compressBtn.hidden = downloadReady && !needsCompression;
+    document.body.classList.toggle('has-floating-actions', downloadReady);
+    dom.downloadBtn.hidden = items.length !== 1 || done.length !== 1;
+    dom.downloadAllBtn.hidden = items.length <= 1 || running || done.length === 0;
     if (!done.length) {
       dom.singleResult.hidden = true;
       dom.multiResult.hidden = true;
@@ -707,17 +720,6 @@
       dom.singleResult.hidden = true;
       renderMulti(done);
     }
-  }
-
-  /** Brings the finished result into view so the download button never depends
-      on the user happening to scroll far enough to find it. Does nothing when
-      nothing finished, and jumps instead of animating when reduced motion is
-      requested. */
-  function revealResults() {
-    var panel = items.length === 1 ? dom.singleResult : dom.multiResult;
-    if (panel.hidden) { return; }
-    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    panel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   }
 
   function statTile(label, value, modifier) {
@@ -1008,10 +1010,26 @@
     resetWorkspace();
   }
 
+  function startAnotherImage() {
+    if (running) { return; }
+    clearAll();
+    dom.dropzone.focus({ preventScroll: true });
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.requestAnimationFrame(function () {
+      dom.dropzone.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    });
+  }
+
   function resetWorkspace() {
     dom.workspace.hidden = true;
     dom.singleResult.hidden = true;
     dom.multiResult.hidden = true;
+    dom.actionBar.dataset.downloadReady = 'false';
+    dom.actionBar.hidden = true;
+    dom.compressBtn.hidden = false;
+    document.body.classList.remove('has-floating-actions');
+    dom.downloadBtn.hidden = true;
+    dom.downloadAllBtn.hidden = true;
     dom.rejected.hidden = true;
     clear(dom.rejectedList);
     clear(dom.fileList);
@@ -1035,7 +1053,7 @@
     dom.dropzone.addEventListener('click', function (event) {
       // The visible "Choose Image" label is the real control; clicking anywhere
       // else in the zone simply opens the same file picker.
-      if (event.target.closest('label')) { return; }
+      if (event.target.closest('label, button')) { return; }
       dom.fileInput.click();
     });
 
@@ -1113,8 +1131,8 @@
       if (item) { downloadBlob(item.result.blob, outputName(item, item.result)); }
     });
     dom.downloadAllBtn.addEventListener('click', function () { downloadAll(); });
-    dom.anotherBtn.addEventListener('click', function () { clearAll(); });
-    dom.multiAnotherBtn.addEventListener('click', function () { clearAll(); });
+    dom.anotherBtn.addEventListener('click', startAnotherImage);
+    dom.multiAnotherBtn.addEventListener('click', startAnotherImage);
 
     window.addEventListener('pagehide', function () {
       stopWorker();
