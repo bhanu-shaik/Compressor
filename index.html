@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online</title>
 <meta name="description" content="Compress JPG, PNG and WebP images online for free. Reduce image file size directly in your browser without uploading your images to a server.">
-<link rel="canonical" href="https://www.example.com/">
+<link rel="canonical" href="https://freecompress.in/">
 <meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
 
@@ -14,8 +14,8 @@
 <meta property="og:site_name" content="Free Image Compressor">
 <meta property="og:title" content="Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online">
 <meta property="og:description" content="Reduce image file size directly in your browser. Your images are processed on your own device and never uploaded to a server.">
-<meta property="og:url" content="https://www.example.com/">
-<meta property="og:image" content="https://www.example.com/assets/og-image.png">
+<meta property="og:url" content="https://freecompress.in/">
+<meta property="og:image" content="https://freecompress.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Free Image Compressor tool interface with a drag and drop upload area">
@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free Image Compressor &ndash; Compress JPG, PNG &amp; WebP Online">
 <meta name="twitter:description" content="Reduce image file size directly in your browser. Your images are processed on your own device and never uploaded to a server.">
-<meta name="twitter:image" content="https://www.example.com/assets/og-image.png">
+<meta name="twitter:image" content="https://freecompress.in/assets/og-image.png">
 <meta name="twitter:image:alt" content="Free Image Compressor tool interface with a drag and drop upload area">
 
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -39,9 +39,9 @@
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="./index.html" aria-label="Free Image Compressor home">
+    <a class="brand" href="./index.html" aria-label="FreeCompress home">
       <img class="brand-mark" src="assets/favicon.svg" alt="" width="32" height="32" aria-hidden="true">
-      <span class="brand-name">Image <span class="brand-accent">Compressor</span></span>
+      <span class="brand-name">Free<span class="brand-accent">Compress</span></span>
     </a>
     <nav class="site-nav" aria-label="Main">
       <a href="#compressor">Compressor</a>
@@ -89,7 +89,7 @@
         <div class="tool-pane">
           <!-- ---------- Drop zone ---------- -->
           <div class="card dropzone-card">
-            <div id="dropzone" class="dropzone" data-state="idle">
+            <div id="dropzone" class="dropzone" data-state="idle" tabindex="-1">
               <svg class="dropzone-icon" viewBox="0 0 48 48" role="img" aria-label="Upload image icon" focusable="false">
                 <path d="M24 32V12m0 0-8 8m8-8 8 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M8 30v6a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4v-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -106,6 +106,9 @@
                 Tip: you can also paste an image from your clipboard with <kbd>Ctrl</kbd>+<kbd>V</kbd>.
               </p>
             </div>
+            <button type="button" class="btn btn-primary btn-lg btn-compress" id="compress-btn" disabled>
+              Compress Image
+            </button>
           </div>
 
           <div id="workspace" class="workspace" hidden>
@@ -216,12 +219,8 @@
       </div>
 
       <!-- ---------- Actions ---------- -->
-      <!-- One permanent bar under the tool, so Compress and Download always sit
-           in the same place instead of at the bottom of the results. -->
-      <div class="action-bar">
-        <button type="button" class="btn btn-primary btn-lg" id="compress-btn">
-          Compress Image
-        </button>
+       <!-- The download action docks to the viewport after a result is ready. -->
+       <div class="action-bar" id="action-bar" hidden>
         <button type="button" class="btn btn-ghost" id="cancel-btn" hidden>Cancel</button>
         <button type="button" class="btn btn-primary btn-lg" id="download-btn" hidden>
           Download Compressed Image
@@ -295,13 +294,6 @@
         <p class="fine-print">The ZIP archive is generated in your browser using your device's memory.</p>
       </section>
 
-      <!-- ============ AD SLOT 1: above informational content ============ -->
-      <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
-      <aside class="ad-slot" data-ad-slot="above-content" aria-label="Advertisement">
-        <span class="ad-slot-tag">Advertisement</span>
-        <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
-      </aside>
-
       <!-- ============================ PRIVACY ============================ -->
       <section class="card privacy-card" id="privacy" aria-labelledby="privacy-heading">
         <div class="privacy-icon" aria-hidden="true">
@@ -323,13 +315,6 @@
           </p>
         </div>
       </section>
-
-      <!-- ============ AD SLOT 2: between tool and FAQ ============ -->
-      <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
-      <aside class="ad-slot" data-ad-slot="before-faq" aria-label="Advertisement">
-        <span class="ad-slot-tag">Advertisement</span>
-        <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
-      </aside>
 
       <!-- ============================ CONTENT ============================ -->
       <div class="content" id="guide">
@@ -433,13 +418,6 @@
             </li>
           </ol>
         </section>
-
-        <!-- ============ AD SLOT 3: below FAQ ============ -->
-        <!-- Reserved for future AdSense. Not a tool control. Safe to delete the whole block. -->
-        <aside class="ad-slot" data-ad-slot="below-faq" aria-label="Advertisement">
-          <span class="ad-slot-tag">Advertisement</span>
-          <span class="ad-slot-note">Reserved space &mdash; no ad is shown</span>
-        </aside>
 
         <section id="faq" aria-labelledby="faq-heading">
           <h2 id="faq-heading">Frequently asked questions</h2>
@@ -546,9 +524,9 @@
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://www.example.com/#app",
+      "@id": "https://freecompress.in/#app",
       "name": "Free Image Compressor",
-      "url": "https://www.example.com/",
+      "url": "https://freecompress.in/",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Any",
       "description": "Compress JPG, PNG and WebP images in your browser. Images are processed on the user's device and are not uploaded to a server.",
@@ -563,7 +541,7 @@
     },
     {
       "@type": "FAQPage",
-      "@id": "https://www.example.com/#faq",
+      "@id": "https://freecompress.in/#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -626,6 +604,6 @@
 }
 </script>
 <script src="js/compressor.js" defer></script>
-<script src="js/app.js" defer></script>
+<script src="js/app.js?v=20260927-3" defer></script>
 </body>
 </html>
