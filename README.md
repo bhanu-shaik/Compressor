@@ -29,8 +29,8 @@ uploaded anywhere.
 - Accepts JPG/JPEG, PNG and WebP by drag-and-drop, file picker or clipboard paste.
 - Output format: **keep original**, **JPG**, **PNG** or **WebP**.
 - Quality slider from 10 to 100, default 80.
-- **Target file size mode**: original quality, 50 KB, 100 KB, 200 KB, 500 KB,
-  1 MB, or a custom number of bytes. The tool searches for the highest quality
+- **Target file size mode**: 50 KB, 100 KB, 200 KB, 500 KB, 1 MB, a custom
+  number of bytes, or original quality. The tool searches for the highest quality
   that fits under the target. It never claims to hit an exact size, and when the
   target cannot be reached without wrecking the image it says so and suggests a
   larger target or smaller dimensions.
@@ -369,8 +369,8 @@ Run through this before each deploy.
 
 ### Target size
 
-- [ ] All seven target options are present: original, 50 KB, 100 KB, 200 KB,
-      500 KB, 1 MB, custom.
+- [ ] All seven target options are present in order: 50 KB, 100 KB, 200 KB,
+      500 KB, 1 MB, custom, original.
 - [ ] Choosing custom reveals the byte input.
 - [ ] A reachable target produces a file at or under the target.
 - [ ] An unreachable target says: "The requested size could not be reached
