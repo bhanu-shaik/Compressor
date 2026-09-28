@@ -73,7 +73,9 @@ This is the central design constraint, not a feature bolted on afterwards.
   `FormData`, no `<form>` upload, no dynamic `import()`.
 - No `localStorage`, `sessionStorage`, `IndexedDB`, `Cache Storage` or
   `document.cookie`.
-- No analytics, no tag manager, no font CDN, no third-party library.
+- Google Analytics 4 measures page views and successful compression operations.
+  Ad-personalization signals are disabled, analytics cookies expire after 24
+  hours, and compression events contain no image or file details.
 - No service worker, so nothing is cached between visits.
 - Preview object URLs use `URL.createObjectURL`, and each one is revoked as soon
   as it is no longer on screen. The URL behind a download click is released on a
@@ -81,8 +83,9 @@ This is the central design constraint, not a feature bolted on afterwards.
   tick as the click cancels the download in some browsers, and a large ZIP can
   still be being written to disk well after the click returns.
 
-The only network requests the page makes are the plain `GET`s for its own HTML,
-CSS, JavaScript and images. The ZIP is assembled from `Blob` parts in memory.
+The page also loads Google Analytics for aggregate usage measurement. Images and
+compression results are never sent to Google. The ZIP is assembled from `Blob`
+parts in memory.
 
 You can confirm this yourself with the method in
 [Privacy verification](#privacy-verification).
@@ -462,12 +465,15 @@ change.
 1. Open the site in a browser with the network panel recording, filtering to
    all requests.
 2. Upload a JPG, compress it, and download the result.
-3. Confirm the only requests are `GET`s for the site's own HTML, CSS, JavaScript
-   and images, plus two `blob:` URLs. There must be no `POST`, `PUT`, `PATCH` or
-   `DELETE`, no XHR or fetch with a body, and no WebSocket.
-4. Repeat on a second file to be sure a second pass adds nothing new.
-5. Check **Application → Storage** in developer tools: `localStorage`,
-   `sessionStorage`, `IndexedDB` and cookies should all be empty.
+3. Confirm Google Analytics requests contain page-view or event measurement
+  data only. There must be no image payload, filename, file size or dimensions
+  in any analytics request. The app itself must make no upload request, XHR
+  with a body, or WebSocket connection.
+4. Confirm a successful compression sends one `compression_completed` event,
+  while failed or cancelled compressions do not.
+5. Check **Application → Storage** in developer tools: the app must not write
+  to `localStorage`, `sessionStorage` or `IndexedDB`. Google Analytics may set
+  analytics cookies configured to expire after 24 hours.
 
 To audit the source:
 
