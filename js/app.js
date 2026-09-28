@@ -586,6 +586,9 @@
         item.status = 'done';
         item.width = result.width;
         item.height = result.height;
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'compression_completed');
+        }
         index++;
         renderFileList();
         renderResults();
